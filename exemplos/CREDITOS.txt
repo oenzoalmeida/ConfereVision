@@ -1,0 +1,11 @@
+As imagens correto.png, faltando.png, extra.png e o vídeo demonstracao.avi foram produzidos por código neste projeto e são dados sintéticos.
+
+cafe-referencia.png: imagem coffee, distribuída no scikit-image v0.21.0:
+https://github.com/scikit-image/scikit-image/blob/v0.21.0/skimage/data/coffee.png
+cafe-resultado.jpg: mesma foto com saída de detecção sobreposta.
+
+frutas-opencv.jpg: imagem de exemplo distribuída no repositório OpenCV:
+https://github.com/opencv/opencv/blob/master/samples/data/fruits.jpg
+Esta referência produziu nenhuma detecção no limiar padrão. Incluída para demonstrar limitações, não como caso de sucesso.
+
+Fotografia coffee: Rachel Michetti, cortesia do Pikolo Espresso Bar, CC0 conforme documentação do scikit-image.
