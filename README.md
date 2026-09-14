@@ -3,7 +3,7 @@
 Conferência visual de kits em Python, Django e OpenCV, com usuários, administração, detecção real YOLOX, imagens, vídeos e histórico privado.
 
 ## Situação desta entrega
-Aplicação implementada e testada localmente. Publicação no Render ainda NÃO realizada: é necessário selecionar o workspace autorizado e disponibilizar um repositório GitHub novo. Banco PostgreSQL gratuito persistente também precisa ser conectado antes de publicar. Não é um produto comercial validado nem substitui os documentos acadêmicos exigidos pela APS.
+Aplicação implementada e testada localmente. Código versionado em repositório privado: https://github.com/oenzoalmeida/ConfereVision. Publicação no Render ainda NÃO realizada: é necessário conectar o repositório no painel e informar DATABASE_URL (PostgreSQL persistente) e ADMIN_PASSWORD. Não é um produto comercial validado nem substitui os documentos acadêmicos exigidos pela APS.
 
 ## Abrir no Windows
 1. Instale Python 3.12.
