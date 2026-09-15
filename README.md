@@ -3,7 +3,13 @@
 Conferência visual de kits em Python, Django e OpenCV, com usuários, administração, detecção real YOLOX, imagens, vídeos e histórico privado.
 
 ## Situação desta entrega
-Aplicação implementada e testada localmente. Código versionado em repositório privado: https://github.com/oenzoalmeida/ConfereVision. Publicação no Render ainda NÃO realizada: é necessário conectar o repositório no painel e informar DATABASE_URL (PostgreSQL persistente) e ADMIN_PASSWORD. Não é um produto comercial validado nem substitui os documentos acadêmicos exigidos pela APS.
+Versão final estável (v1.0), publicada e em produção. Código: https://github.com/oenzoalmeida/ConfereVision. Aplicação publicada no Render: https://conferevision.onrender.com, com PostgreSQL persistente no Neon e HTTPS ativo (`/healthz` disponível para verificação). Não é um produto comercial validado nem substitui os documentos acadêmicos exigidos pela APS.
+
+## Arquitetura
+- **Django 5.2** (MVC, sessões, autenticação e CSRF) servido por **Gunicorn**.
+- **Render** como hospedagem (plano Free, deploy via `render.yaml`/`build.sh`, HTTPS e health check automáticos).
+- **PostgreSQL no Neon** como banco persistente (imagens anotadas e histórico incluídos no banco).
+- **OpenCV + YOLOX-s ONNX** (OpenCV Zoo, CPU) para detecção de objetos; estáticos servidos por WhiteNoise.
 
 ## Abrir no Windows
 1. Instale Python 3.12.
@@ -64,17 +70,18 @@ python -m unittest test_vision -v
 ```
 Foram aprovados 16 testes de aplicação/segurança e 7 de visão geométrica. Também foi verificado o vídeo sintético, incluindo as transições. O detector real rodou na foto da xícara; o pico do processo isolado foi cerca de 174 MiB no ambiente de teste. Não foi feita avaliação representativa de acurácia ou carga multiusuário. Verificação visual via navegador foi bloqueada pelo ambiente; rotas e templates foram verificados pelos testes Django.
 
-## Hospedagem gratuita preparada
-Arquivos `render.yaml` e `build.sh` descrevem um serviço Python Free no Render. Não há recursos pagos no manifesto. O serviço requer PostgreSQL externo persistente via DATABASE_URL; não use o SQLite local para hospedagem gratuita no Render, pois o disco é efêmero. O aplicativo bloqueia inicialização em produção sem DATABASE_URL e SECRET_KEY.
+## Deploy (já realizado)
+A aplicação está publicada em **https://conferevision.onrender.com** (Render, plano Free, auto-deploy a partir da branch `main`), com **PostgreSQL persistente no Neon** via `DATABASE_URL` e HTTPS ativo. O `/healthz` responde o estado do serviço.
 
-Antes do deploy:
-1. Disponibilizar este código em repositório GitHub novo, sem banco e credenciais. Os arquivos grandes de modelo ficam fora do git; o build baixa e verifica o modelo.
-2. Escolher o workspace correto no Render. Os disponíveis nesta sessão são QueueFlow e PenteFino; nenhum foi selecionado automaticamente.
-3. Conectar um PostgreSQL persistente em plano gratuito compatível. O PostgreSQL gratuito do próprio Render expira em 30 dias; não é a configuração sugerida para guardar o projeto.
-4. Criar o Blueprint Free e informar DATABASE_URL, ADMIN_PASSWORD e demais variáveis solicitadas. Não publique segredos no GitHub.
-5. Conferir HTTPS, `/healthz`, cadastro, acesso administrativo e uma análise real após publicar.
+Arquivos `render.yaml` e `build.sh` descrevem o serviço. Não há recursos pagos no manifesto. O aplicativo bloqueia inicialização em produção sem DATABASE_URL e SECRET_KEY. Os arquivos grandes de modelo ficam fora do git; o build baixa e verifica o SHA-256.
 
-O Render Free hiberna após 15 minutos sem tráfego e pode levar cerca de um minuto para voltar. As franquias são compartilhadas por workspace. Consulte limites de consumo e cobrança da conta antes de ativar: https://render.com/docs/free. Não foi alterado plano nem criado recurso nesta entrega.
+Para recriar o deploy em outra conta:
+1. Disponibilizar este código em repositório GitHub, sem banco e credenciais.
+2. Conectar um PostgreSQL persistente compatível (Neon ou equivalente; o PostgreSQL gratuito do próprio Render expira em 30 dias).
+3. Criar o Blueprint Free e informar DATABASE_URL, SECRET_KEY, ADMIN_PASSWORD e demais variáveis do `.env.example`. Não publique segredos no GitHub.
+4. Conferir HTTPS, `/healthz`, cadastro, acesso administrativo e uma análise real após publicar.
+
+Limitações conhecidas do plano gratuito: o serviço hiberna após 15 minutos sem tráfego e pode levar cerca de um minuto para voltar; CPU/RAM são compartilhadas e o processamento de vídeo tem limite aproximado de 65 segundos (ver seção Vídeos). Consulte limites de consumo: https://render.com/docs/free.
 
 ## Segurança e dados
 Django protege senhas com hash, sessões no banco e formulários com CSRF. Verificações de propriedade são feitas no servidor inclusive nas imagens. Existe limite de tentativas no login público e na recuperação, e limite de análises por usuário. O login administrativo também limita tentativas; operação comercial ainda exige monitoramento e avaliação de carga. Cookies são somente de sessão e CSRF; não há rastreamento, publicidade ou analytics.
