@@ -1,4 +1,4 @@
-"""Baixa peso oficial OpenCV Zoo e confere hash publicado no Git LFS."""
+"""Baixa peso oficial OpenCV Zoo e confere o SHA-256 fixado neste arquivo."""
 import hashlib,urllib.request
 from pathlib import Path
 URL='https://media.githubusercontent.com/media/opencv/opencv_zoo/main/models/object_detection_yolox/object_detection_yolox_2022nov.onnx'

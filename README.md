@@ -66,7 +66,7 @@ A classe Livro não garante reconhecimento de cadernos. Caneca/xícara não veri
 Testes:
 ```
 python manage.py test core
-python -m unittest test_vision -v
+python -m unittest -v test_vision
 ```
 Foram aprovados 16 testes de aplicação/segurança e 7 de visão geométrica. Também foi verificado o vídeo sintético, incluindo as transições. O detector real rodou na foto da xícara; o pico do processo isolado foi cerca de 174 MiB no ambiente de teste. Não foi feita avaliação representativa de acurácia ou carga multiusuário. Verificação visual via navegador foi bloqueada pelo ambiente; rotas e templates foram verificados pelos testes Django.
 
