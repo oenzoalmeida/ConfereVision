@@ -2,9 +2,9 @@ import os
 from pathlib import Path
 import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
-DEBUG = os.getenv('DEBUG', '1') == '1'
-SECRET_KEY = os.getenv('SECRET_KEY', 'local-development-only-not-for-deployment')
-if not DEBUG and SECRET_KEY == 'local-development-only-not-for-deployment':
+DEBUG = os.getenv('DEBUG', '0') == '1'
+SECRET_KEY = os.environ.get('SECRET_KEY')
+if not DEBUG and not SECRET_KEY:
     raise RuntimeError('SECRET_KEY obrigatório em produção.')
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,testserver').split(',')
 if os.getenv('RENDER_EXTERNAL_HOSTNAME'): ALLOWED_HOSTS.append(os.environ['RENDER_EXTERNAL_HOSTNAME'])
