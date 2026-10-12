@@ -11,3 +11,5 @@ staticfiles/
 models/*.onnx
 models/*.download
 *.log
+.vercel
+.env*
