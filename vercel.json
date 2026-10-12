@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "python manage.py collectstatic --noinput",
+  "functions": {
+    "api/index.py": {
+      "maxDuration": 300,
+      "memory": 3009,
+      "includeFiles": "{models/yolox.onnx,templates/**,static/**,config/**,core/**,detector.py,vision.py}"
+    }
+  },
+  "rewrites": [{ "source": "/(.*)", "destination": "/api/index.py" }]
+}
