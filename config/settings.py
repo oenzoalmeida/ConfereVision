@@ -9,7 +9,8 @@ if not DEBUG and not SECRET_KEY:
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,testserver').split(',')
 if os.getenv('RENDER_EXTERNAL_HOSTNAME'): ALLOWED_HOSTS.append(os.environ['RENDER_EXTERNAL_HOSTNAME'])
 if os.getenv('VERCEL_URL'): ALLOWED_HOSTS.append(os.environ['VERCEL_URL'])
-CSRF_TRUSTED_ORIGINS = [f'https://{h}' for h in ALLOWED_HOSTS if h not in ['localhost','127.0.0.1','testserver']] + ([f'https://{os.environ["VERCEL_URL"]}'] if os.getenv('VERCEL_URL') else [])
+if os.getenv('VERCEL_PROJECT_PRODUCTION_DOMAIN'): ALLOWED_HOSTS.append(os.environ['VERCEL_PROJECT_PRODUCTION_DOMAIN'])
+CSRF_TRUSTED_ORIGINS = [f'https://{h}' for h in ALLOWED_HOSTS if h not in ['localhost','127.0.0.1','testserver']] + ([f'https://{os.environ["VERCEL_URL"]}'] if os.getenv('VERCEL_URL') else []) + ([f'https://{os.environ["VERCEL_PROJECT_PRODUCTION_DOMAIN"]}'] if os.getenv('VERCEL_PROJECT_PRODUCTION_DOMAIN') else [])
 INSTALLED_APPS = ['django.contrib.admin','django.contrib.auth','django.contrib.contenttypes','django.contrib.sessions','django.contrib.messages','django.contrib.staticfiles','core']
 MIDDLEWARE = ['django.middleware.security.SecurityMiddleware','whitenoise.middleware.WhiteNoiseMiddleware','django.contrib.sessions.middleware.SessionMiddleware','django.middleware.common.CommonMiddleware','django.middleware.csrf.CsrfViewMiddleware','django.contrib.auth.middleware.AuthenticationMiddleware','core.middleware.PasswordChangeMiddleware','core.middleware.AdminLoginThrottleMiddleware','django.contrib.messages.middleware.MessageMiddleware','django.middleware.clickjacking.XFrameOptionsMiddleware']
 ROOT_URLCONF = 'config.urls'
