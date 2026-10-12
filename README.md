@@ -6,9 +6,9 @@ A detecção é real, feita no servidor com o modelo **YOLOX-s (OpenCV Zoo)** em
 
 ## Demonstração
 
-**Aplicação:** https://conferevision.onrender.com
+**Aplicação:** https://conferevision.vercel.app
 
-> A demo roda no plano gratuito do Render: o serviço hiberna após inatividade e o primeiro acesso pode levar cerca de um minuto para responder. O endpoint [`/healthz`](https://conferevision.onrender.com/healthz) indica o estado do serviço.
+> A demo roda na Vercel (função Python com o modelo ONNX embarcado). O endpoint [`/healthz`](https://conferevision.vercel.app/healthz) indica o estado do serviço.
 
 ## Sobre o projeto
 
@@ -32,7 +32,7 @@ O sistema tem autenticação, área própria por usuário (kits, análises e ima
 - OpenCV (DNN) + **YOLOX-s ONNX** do [OpenCV Zoo](https://github.com/opencv/opencv_zoo/tree/main/models/object_detection_yolox) — inferência em CPU
 - PostgreSQL (produção) / SQLite (desenvolvimento local)
 - Gunicorn, WhiteNoise (estáticos)
-- Render (hospedagem), Neon (PostgreSQL persistente)
+- Vercel (hospedagem serverless), Neon (PostgreSQL persistente)
 
 ## Arquitetura / Estrutura
 
@@ -45,7 +45,7 @@ ConfereVision/
 ├── test_vision.py     # testes de visão (fluxo geométrico)
 ├── download_model.py  # download do modelo com validação SHA-256
 ├── exemplos/          # imagens/vídeo de exemplo e créditos
-├── build.sh, render.yaml
+├── vercel.json, api/ (adaptador WSGI)
 └── manage.py, requirements.txt
 ```
 
@@ -77,7 +77,7 @@ Definidas em `.env` a partir de `.env.example` (nunca comunique valores reais):
 |---|---|
 | `DEBUG` | `1` em desenvolvimento; produção exige `0` |
 | `SECRET_KEY` | Chave secreta do Django (gere com `python -c "import secrets; print(secrets.token_urlsafe(50))"`) |
-| `ALLOWED_HOSTS` | Hostnames em produção, separados por vírgula (ex.: `conferevision.onrender.com`) |
+| `ALLOWED_HOSTS` | Hostnames em produção, separados por vírgula (ex.: `conferevision.vercel.app`) |
 | `DATABASE_URL` | PostgreSQL persistente em produção (ex.: `postgres://usuario:senha@host:5432/conferevision`) |
 | `ADMIN_USERNAME` / `ADMIN_EMAIL` / `ADMIN_PASSWORD` | Criação do administrador pelo `bootstrap_admin` |
 
@@ -103,7 +103,7 @@ Não foi feita avaliação representativa de acurácia ou de carga multiusuário
 
 ## Status
 
-Versão estável publicada em https://conferevision.onrender.com (deploy automático a partir da `main` via `render.yaml`), com PostgreSQL persistente no Neon e HTTPS ativo.
+Versão estável publicada em https://conferevision.vercel.app (função Python na Vercel, cold start de ~2s), com PostgreSQL persistente no Neon e HTTPS ativo. A fase anterior de hospedagem no Render foi encerrada em 2026-10.
 
 ## Limitações conhecidas
 
