@@ -132,15 +132,15 @@ Uso como aprovação autônoma de expedição não é recomendado.
 
 ## Segurança e dados
 
-Senhas com hash. Sessões no banco. Formulários com CSRF. Cookies somente de sessão e CSRF.
+As senhas são armazenadas com hash, e as sessões ficam no banco. Os formulários usam proteção CSRF, com cookies restritos à sessão e ao CSRF.
 
-Verificação de propriedade no servidor inclusive no acesso a imagens. Limite de tentativas no login e na recuperação. Limite de análises por usuário.
+A titularidade dos recursos é verificada no servidor, inclusive no acesso a imagens. Há limites de tentativas no login e na recuperação de senha, além de um limite de análises por usuário.
 
 Sem rastreamento, publicidade ou analytics.
 
 ## Referências e licenças
 
-[OpenCV Zoo YOLOX](https://github.com/opencv/opencv_zoo/tree/main/models/object_detection_yolox): Apache 2.0 (licença em `models/LICENSE`. Decodificação adaptada deste projeto).
+[OpenCV Zoo YOLOX](https://github.com/opencv/opencv_zoo/tree/main/models/object_detection_yolox): Apache 2.0 (licença em `models/LICENSE`, com decodificação adaptada deste projeto).
 
 [YOLOX: Exceeding YOLO Series](https://arxiv.org/abs/2107.08430).
 
