@@ -3,22 +3,25 @@
 # Rode antes de commitar:
 #   ruff format .
 #   ruff check .
+#
+# Fica em ruff.toml, e não em pyproject.toml, de propósito: um pyproject.toml
+# na raiz sem a tabela [project] faz o builder Python da Vercel tratar o
+# repositório como um pacote instalável e falhar no deploy.
 
-[tool.ruff]
 line-length = 100
 target-version = "py312"
 exclude = ["models", "exemplos"]
 
-[tool.ruff.format]
+[format]
 # O projeto usa aspas simples; preservar evita um diff enorme sem ganho de leitura.
 quote-style = "preserve"
 
-[tool.ruff.lint]
+[lint]
 # Conjunto enxuto e de alto sinal: erros de sintaxe e de escopo (E9),
 # problemas que o pyflakes pega de verdade (F) e imports fora de ordem (I).
 select = ["E4", "E7", "E9", "F", "I"]
 
-[tool.ruff.lint.per-file-ignores]
+[lint.per-file-ignores]
 # O adaptador da Vercel precisa ajustar sys.path e as variáveis de ambiente
 # antes de importar o Django; os imports fora do topo são intencionais.
 "api/index.py" = ["E402"]
