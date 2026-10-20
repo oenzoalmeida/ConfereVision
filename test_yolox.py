@@ -40,6 +40,14 @@ class RealModelTests(unittest.TestCase):
             self.assertLessEqual(x + width, first.shape[1])
             self.assertLessEqual(y + height, first.shape[0])
 
+    def test_reference_photograph_detects_the_annotated_cup(self):
+        from evaluate_photos import evaluate
+
+        result = evaluate()
+        matches = result['images'][0]['matched']
+        self.assertTrue(any(obj['classe'] == 'Caneca / xícara' for obj in matches))
+        self.assertEqual(result['true_positives'] + result['false_negatives'], 2)
+
     def test_invalid_frame_is_rejected(self):
         with self.assertRaises(ValueError):
             detect_real(None)
