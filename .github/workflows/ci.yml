@@ -35,6 +35,8 @@ jobs:
         run: ruff check .
       - name: Django system check
         run: python manage.py check
+      - name: Download checksum-verified ONNX model
+        run: python download_model.py
       - name: Django tests
         run: python manage.py test -v 1
       - name: Vision tests
@@ -42,5 +44,4 @@ jobs:
 
       - name: Real ONNX model integration
         run: |
-          python download_model.py
           python -m unittest test_yolox -v
