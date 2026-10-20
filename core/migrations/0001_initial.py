@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -17,7 +16,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Attempt',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name='ID'
+                    ),
+                ),
                 ('key', models.CharField(db_index=True, max_length=64)),
                 ('created', models.DateTimeField(auto_now_add=True)),
             ],
@@ -25,7 +29,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Inspection',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name='ID'
+                    ),
+                ),
                 ('kit_name', models.CharField(max_length=100)),
                 ('mode', models.CharField(max_length=12)),
                 ('created', models.DateTimeField(auto_now_add=True)),
@@ -35,28 +44,71 @@ class Migration(migrations.Migration):
                 ('timeline', models.JSONField(default=list)),
                 ('image', models.BinaryField()),
                 ('duration_ms', models.PositiveIntegerField(default=0)),
-                ('human_review', models.CharField(choices=[('pending', 'Pendente'), ('correct', 'Correto'), ('incorrect', 'Incorreto')], default='pending', max_length=12)),
-                ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    'human_review',
+                    models.CharField(
+                        choices=[
+                            ('pending', 'Pendente'),
+                            ('correct', 'Correto'),
+                            ('incorrect', 'Incorreto'),
+                        ],
+                        default='pending',
+                        max_length=12,
+                    ),
+                ),
+                (
+                    'owner',
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
             name='Kit',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name='ID'
+                    ),
+                ),
                 ('name', models.CharField(max_length=100)),
-                ('mode', models.CharField(choices=[('real', 'Objetos reais'), ('geometric', 'Geométrico')], default='real', max_length=12)),
+                (
+                    'mode',
+                    models.CharField(
+                        choices=[('real', 'Objetos reais'), ('geometric', 'Geométrico')],
+                        default='real',
+                        max_length=12,
+                    ),
+                ),
                 ('composition', models.JSONField(default=dict)),
                 ('created', models.DateTimeField(auto_now_add=True)),
-                ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    'owner',
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
             name='Profile',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name='ID'
+                    ),
+                ),
                 ('must_change_password', models.BooleanField(default=False)),
                 ('recovery_hash', models.CharField(blank=True, max_length=128)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    'user',
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL
+                    ),
+                ),
             ],
         ),
     ]

@@ -1,10 +1,13 @@
 """Detecção geométrica em bancada controlada; não reconhece SKUs."""
+
 from collections import Counter
+
 import cv2
 import numpy as np
 
 COLORS = {'Azul': (90, 130), 'Verde': (36, 85), 'Amarelo': (20, 35)}
 SHAPES = ['Retângulo', 'Círculo', 'Triângulo']
+
 
 def detect(frame, min_area=600):
     if frame is None or frame.size == 0:
@@ -26,24 +29,47 @@ def detect(frame, min_area=600):
             if area < min_area:
                 continue
             perimeter = cv2.arcLength(contour, True)
-            poly = cv2.approxPolyDP(contour, .025 * perimeter, True)
-            circularity = 4 * np.pi * area / max(perimeter ** 2, 1)
-            shape = ('Triângulo' if len(poly) == 3 else 'Retângulo' if len(poly) == 4
-                     else 'Círculo' if circularity > .78 else 'Não classificado')
+            poly = cv2.approxPolyDP(contour, 0.025 * perimeter, True)
+            circularity = 4 * np.pi * area / max(perimeter**2, 1)
+            shape = (
+                'Triângulo'
+                if len(poly) == 3
+                else 'Retângulo'
+                if len(poly) == 4
+                else 'Círculo'
+                if circularity > 0.78
+                else 'Não classificado'
+            )
             label = f'{color} / {shape}'
             x, y, w, h = cv2.boundingRect(contour)
             objects.append({'classe': label, 'area': round(area), 'caixa': [x, y, w, h]})
-            cv2.rectangle(annotated, (x, y), (x+w, y+h), (60, 180, 50), 2)
+            cv2.rectangle(annotated, (x, y), (x + w, y + h), (60, 180, 50), 2)
             ascii_label = label.encode('ascii', 'ignore').decode()
-            cv2.putText(annotated, ascii_label, (x, max(y-8, 20)), cv2.FONT_HERSHEY_SIMPLEX, .5, (30, 60, 30), 2)
+            cv2.putText(
+                annotated,
+                ascii_label,
+                (x, max(y - 8, 20)),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.5,
+                (30, 60, 30),
+                2,
+            )
     return annotated, combined, objects
+
 
 def compare(expected, objects):
     counts = Counter(o['classe'] for o in objects)
-    rows = [{'Classe': key, 'Esperado': int(expected.get(key, 0)),
-             'Detectado': counts[key], 'Diferença': counts[key] - int(expected.get(key, 0))}
-            for key in sorted(set(expected) | set(counts))]
+    rows = [
+        {
+            'Classe': key,
+            'Esperado': int(expected.get(key, 0)),
+            'Detectado': counts[key],
+            'Diferença': counts[key] - int(expected.get(key, 0)),
+        }
+        for key in sorted(set(expected) | set(counts))
+    ]
     return bool(expected) and all(r['Diferença'] == 0 for r in rows), rows
+
 
 def sample(kind='correto'):
     image = np.full((600, 900, 3), 245, np.uint8)
@@ -55,5 +81,6 @@ def sample(kind='correto'):
     if kind == 'extra':
         cv2.circle(image, (460, 510), 42, (40, 170, 40), -1)
     return image
+
 
 DEFAULT_KIT = {'Azul / Retângulo': 1, 'Verde / Círculo': 1, 'Amarelo / Triângulo': 1}
