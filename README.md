@@ -112,6 +112,10 @@ python manage.py test core         # 16 testes de aplicação/segurança
 python -m unittest -v test_vision  # 7 testes de visão geométrica
 ```
 
+A avaliação reproduzível de `python evaluate_photos.py` usa `exemplos/rotulos-fotograficos.json`, com caixas manuais para a xícara e a colher da foto de café. A correspondência exige a mesma classe e IoU de pelo menos 0,50, com confiança mínima de 0,45. O pires está fora das classes avaliadas. O arquivo da foto é verificado por SHA-256.
+
+Com o modelo atual, esse único exemplo teve um verdadeiro positivo (xícara), nenhum falso positivo e um falso negativo (colher). A precisão observada foi 1,00 e o recall foi 0,50 nesses dois objetos. Esses valores não estimam a qualidade geral do sistema. A amostra não cobre diversidade de produtos, iluminação, oclusão ou distância. Não há estimativa de mAP. O teste automatizado exige a detecção da xícara e permite melhorias futuras na detecção da colher.
+
 Não foi feita avaliação representativa de acurácia ou de carga multiusuário.
 
 ## Status

@@ -1,0 +1,35 @@
+{
+  "description": "Manual visible-object annotations for one existing CC0 reference photograph. This is not a representative accuracy dataset. The saucer is outside the evaluated cup/spoon classes.",
+  "iou_threshold": 0.5,
+  "confidence_threshold": 0.45,
+  "images": [
+    {
+      "file": "exemplos/cafe-referencia.png",
+      "sha256": "cc02f8ca188b167c775a7101b5d767d1e71792cf762c33d6fa15a4599b5a8de7",
+      "evaluated_classes": [
+        "Caneca / xícara",
+        "Colher"
+      ],
+      "objects": [
+        {
+          "classe": "Caneca / xícara",
+          "caixa": [
+            173,
+            18,
+            239,
+            292
+          ]
+        },
+        {
+          "classe": "Colher",
+          "caixa": [
+            325,
+            66,
+            101,
+            262
+          ]
+        }
+      ]
+    }
+  ]
+}
