@@ -8,3 +8,4 @@ build.sh
 test_vision.py
 download_model.py
 ruff.toml
+test_yolox.py
