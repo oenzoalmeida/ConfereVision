@@ -44,6 +44,7 @@ MIDDLEWARE = [
     'core.middleware.AdminLoginThrottleMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'core.middleware.NoindexMiddleware',
 ]
 ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
