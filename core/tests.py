@@ -184,3 +184,14 @@ class AccessTests(TestCase):
         for i in range(11):
             response = self.client.post('/admin/login/', {'username': 'admin', 'password': 'wrong'})
         self.assertEqual(response.status_code, 429)
+
+    def test_robots_blocks_all(self):
+        response = self.client.get('/robots.txt')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('Disallow: /', response.content.decode())
+
+    def test_noindex_header_on_pages(self):
+        self.client.force_login(self.a)
+        for url in ['/', '/sobre/', '/entrar/']:
+            response = self.client.get(url)
+            self.assertEqual(response['X-Robots-Tag'], 'noindex, nofollow', url)
