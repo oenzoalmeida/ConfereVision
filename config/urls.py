@@ -1,11 +1,19 @@
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
+from django.http import HttpResponse
 from django.urls import path
 from django.views.generic import TemplateView
 
 from core import views
 
+
+def robots(request):
+    # Sistema interno: impede indexação por buscadores.
+    return HttpResponse('User-agent: *\nDisallow: /\n', content_type='text/plain; charset=utf-8')
+
+
 urlpatterns = [
+    path('robots.txt', robots),
     path('admin/', admin.site.urls),
     path('administracao/', views.admin_overview, name='admin_overview'),
     path('', views.dashboard, name='dashboard'),

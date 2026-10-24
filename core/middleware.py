@@ -8,7 +8,7 @@ class PasswordChangeMiddleware:
     def __call__(self, request):
         if (
             request.user.is_authenticated
-            and request.path not in ['/senha/', 'sair/', '/sair/']
+            and request.path not in ['/senha/', '/sair/', '/healthz']
             and not request.path.startswith('/static/')
         ):
             from .models import Profile
@@ -35,3 +35,15 @@ class AdminLoginThrottleMiddleware:
                     'Muitas tentativas. Aguarde 15 minutos e tente novamente.', status=429
                 )
         return self.get_response(request)
+
+
+class NoindexMiddleware:
+    """Sistema interno: sinaliza a buscadores que nada deve ser indexado."""
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+        response['X-Robots-Tag'] = 'noindex, nofollow'
+        return response
