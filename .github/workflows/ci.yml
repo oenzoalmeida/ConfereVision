@@ -14,10 +14,10 @@ jobs:
       DEBUG: '1'
       SECRET_KEY: ci-placeholder-nao-usar-em-producao
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           lfs: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.13'
           cache: pip
@@ -27,9 +27,21 @@ jobs:
           pip install -r requirements.txt
       - name: Compile Python files
         run: python -m compileall -q .
+      - name: Formatação (ruff)
+        run: |
+          pip install ruff==0.16.8
+          ruff format --check .
+      - name: Lint (ruff)
+        run: ruff check .
       - name: Django system check
         run: python manage.py check
+      - name: Download checksum-verified ONNX model
+        run: python download_model.py
       - name: Django tests
         run: python manage.py test -v 1
       - name: Vision tests
         run: python -m unittest test_vision -v
+
+      - name: Real ONNX model integration
+        run: |
+          python -m unittest test_yolox -v
