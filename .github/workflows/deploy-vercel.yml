@@ -1,0 +1,48 @@
+name: Deploy (Vercel)
+
+# Deploy automático para a Vercel a cada push na main, substituindo a
+# dependência da integração Git do dashboard (que estava inativa e não
+# acompanhava mais a branch). Usa a CLI oficial da Vercel.
+#
+# Secrets necessários no repositório (Settings > Secrets and variables > Actions):
+#   VERCEL_TOKEN      - token pessoal da Vercel (vercel.com/account/tokens)
+#   VERCEL_ORG_ID     - ID do time/conta (de .vercel/project.json após `vercel link`)
+#   VERCEL_PROJECT_ID - ID do projeto conferevision (de .vercel/project.json)
+#
+# Enquanto os secrets não existirem, o job é pulado (não falha o CI).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check secrets
+        id: guard
+        run: |
+          if [ -n "${{ secrets.VERCEL_TOKEN }}" ] && [ -n "${{ secrets.VERCEL_PROJECT_ID }}" ] && [ -n "${{ secrets.VERCEL_ORG_ID }}" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Vercel secrets ausentes (VERCEL_TOKEN/VERCEL_ORG_ID/VERCEL_PROJECT_ID). Deploy pulado."
+          fi
+      - uses: actions/checkout@v4
+        if: steps.guard.outputs.ready == 'true'
+      - uses: actions/setup-node@v4
+        if: steps.guard.outputs.ready == 'true'
+        with:
+          node-version: 22
+      - name: Deploy to Vercel (production)
+        if: steps.guard.outputs.ready == 'true'
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          npx --yes vercel@latest pull --yes --environment=production --token="${{ secrets.VERCEL_TOKEN }}"
+          npx --yes vercel@latest deploy --prod --yes --token="${{ secrets.VERCEL_TOKEN }}"
