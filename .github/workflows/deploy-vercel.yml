@@ -32,9 +32,9 @@ jobs:
             echo "ready=false" >> "$GITHUB_OUTPUT"
             echo "::notice::Vercel secrets ausentes (VERCEL_TOKEN/VERCEL_ORG_ID/VERCEL_PROJECT_ID). Deploy pulado."
           fi
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         if: steps.guard.outputs.ready == 'true'
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         if: steps.guard.outputs.ready == 'true'
         with:
           node-version: 22
