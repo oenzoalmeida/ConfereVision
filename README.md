@@ -10,6 +10,10 @@ A detecção é real, feita no servidor com o modelo **YOLOX-s (OpenCV Zoo)** em
 
 > A demo roda na Vercel (função Python com o modelo ONNX embarcado). O endpoint [`/healthz`](https://conferevision.vercel.app/healthz) indica o estado do serviço.
 
+## Capturas de tela
+
+![Tela de entrada do ConfereVision](docs/screenshots/entrada.png)
+
 ## Sobre o projeto
 
 A conferência manual de kits (pedidos, envelopes, kits de peças) é propensa a esquecimentos. O ConfereVision organiza essa checagem: cada kit tem uma composição esperada (item → quantidade) e cada análise compara a detecção da imagem/vídeo contra essa composição, registrando o resultado no histórico do usuário.
