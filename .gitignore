@@ -13,3 +13,4 @@ models/*.download
 *.log
 .vercel
 .env*
+datasets/
