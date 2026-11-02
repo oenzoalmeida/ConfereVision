@@ -48,11 +48,31 @@ SEED = 20261102
 # As chaves são as mesmas de detector.PRODUCTS; o id numérico no JSON de
 # anotações do COCO NÃO é esse índice — ele é resolvido pelo nome.
 COCO80_NAMES = {
-    24: 'backpack', 25: 'umbrella', 26: 'handbag', 27: 'tie', 28: 'suitcase',
-    39: 'bottle', 40: 'wine glass', 41: 'cup', 42: 'fork', 43: 'knife',
-    44: 'spoon', 45: 'bowl', 46: 'banana', 47: 'apple', 49: 'orange',
-    63: 'laptop', 64: 'mouse', 65: 'remote', 66: 'keyboard', 67: 'cell phone',
-    73: 'book', 74: 'clock', 75: 'vase', 76: 'scissors', 77: 'teddy bear',
+    24: 'backpack',
+    25: 'umbrella',
+    26: 'handbag',
+    27: 'tie',
+    28: 'suitcase',
+    39: 'bottle',
+    40: 'wine glass',
+    41: 'cup',
+    42: 'fork',
+    43: 'knife',
+    44: 'spoon',
+    45: 'bowl',
+    46: 'banana',
+    47: 'apple',
+    49: 'orange',
+    63: 'laptop',
+    64: 'mouse',
+    65: 'remote',
+    66: 'keyboard',
+    67: 'cell phone',
+    73: 'book',
+    74: 'clock',
+    75: 'vase',
+    76: 'scissors',
+    77: 'teddy bear',
     79: 'toothbrush',
 }
 assert set(COCO80_NAMES) == set(PRODUCTS), 'Cobertura de categorias diverge do detector'
@@ -105,9 +125,18 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--max-por-classe', type=int, default=15)
     parser.add_argument('--max-imagens', type=int, default=300)
-    parser.add_argument('--inicio', type=int, default=0, help='fatia inicial (0-based) das imagens selecionadas')
-    parser.add_argument('--fim', type=int, default=None, help='fatia final exclusiva; padrão: todas')
-    parser.add_argument('--parcial', type=str, default=None, help='grava contagens da fatia neste JSON em vez de agregar')
+    parser.add_argument(
+        '--inicio', type=int, default=0, help='fatia inicial (0-based) das imagens selecionadas'
+    )
+    parser.add_argument(
+        '--fim', type=int, default=None, help='fatia final exclusiva; padrão: todas'
+    )
+    parser.add_argument(
+        '--parcial',
+        type=str,
+        default=None,
+        help='grava contagens da fatia neste JSON em vez de agregar',
+    )
     args = parser.parse_args()
 
     ensure_annotations()
@@ -126,13 +155,20 @@ def main():
 
     selected = select_images(data, args.max_por_classe, args.max_imagens)
     ordered_ids = sorted(img['id'] for img in data['images'] if img['id'] in selected)
-    fatia = ordered_ids[args.inicio:args.fim]
+    fatia = ordered_ids[args.inicio : args.fim]
     images = {img['id']: img for img in data['images'] if img['id'] in set(fatia)}
     gt_by_image = defaultdict(list)
     for ann in data['annotations']:
-        if ann['image_id'] in selected and ann['category_id'] in label_by_json_id and not ann.get('iscrowd'):
+        if (
+            ann['image_id'] in selected
+            and ann['category_id'] in label_by_json_id
+            and not ann.get('iscrowd')
+        ):
             gt_by_image[ann['image_id']].append(
-                {'classe': label_by_json_id[ann['category_id']], 'caixa': [round(v) for v in ann['bbox']]}
+                {
+                    'classe': label_by_json_id[ann['category_id']],
+                    'caixa': [round(v) for v in ann['bbox']],
+                }
             )
 
     IMAGES_DIR.mkdir(parents=True, exist_ok=True)
@@ -170,11 +206,18 @@ def main():
         stats['suporte'] = stats['tp'] + stats['fn']
 
     if args.parcial:
-        pathlib.Path(args.parcial).write_text(json.dumps({
-            'inicio': args.inicio, 'fim': args.inicio + evaluated,
-            'avaliadas': evaluated, 'total': total,
-            'por_classe': {k: dict(v) for k, v in per_class.items()},
-        }), encoding='utf-8')
+        pathlib.Path(args.parcial).write_text(
+            json.dumps(
+                {
+                    'inicio': args.inicio,
+                    'fim': args.inicio + evaluated,
+                    'avaliadas': evaluated,
+                    'total': total,
+                    'por_classe': {k: dict(v) for k, v in per_class.items()},
+                }
+            ),
+            encoding='utf-8',
+        )
         print(f'fatia {args.inicio}:{args.inicio + evaluated} avaliada ({evaluated} imagens)')
         return
 
@@ -205,11 +248,15 @@ def main():
     REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
 
     print(f"\nImagens avaliadas: {evaluated}  (confiança>={CONFIDENCE}, IoU>={IOU_THRESHOLD})")
-    print(f"TOTAL  TP={total['tp']} FP={total['fp']} FN={total['fn']}  "
-          f"precisão={report['total']['precisao']}  revocação={report['total']['revocacao']}")
+    print(
+        f"TOTAL  TP={total['tp']} FP={total['fp']} FN={total['fn']}  "
+        f"precisão={report['total']['precisao']}  revocação={report['total']['revocacao']}"
+    )
     for classe, stats in report['por_classe'].items():
-        print(f"  {classe:<18} TP={stats['tp']:<4} FP={stats['fp']:<4} FN={stats['fn']:<4} "
-              f"P={stats['precisao']} R={stats['revocacao']}")
+        print(
+            f"  {classe:<18} TP={stats['tp']:<4} FP={stats['fp']:<4} FN={stats['fn']:<4} "
+            f"P={stats['precisao']} R={stats['revocacao']}"
+        )
     print(f'Relatório: {REPORT}')
 
 
