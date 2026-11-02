@@ -45,3 +45,5 @@ jobs:
       - name: Real ONNX model integration
         run: |
           python -m unittest test_yolox -v
+      - name: Synthetic robustness set
+        run: python -m unittest test_sinteticos -v
