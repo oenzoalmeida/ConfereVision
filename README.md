@@ -114,13 +114,24 @@ Testes automatizados:
 ```bash
 python manage.py test core         # 16 testes de aplicação/segurança
 python -m unittest -v test_vision  # 7 testes de visão geométrica
+python -m unittest -v test_sinteticos  # 4 testes do conjunto sintético de robustez
 ```
 
 A avaliação reproduzível de `python evaluate_photos.py` usa `exemplos/rotulos-fotograficos.json`, com caixas manuais para a xícara e a colher da foto de café. A correspondência exige a mesma classe e IoU de pelo menos 0,50, com confiança mínima de 0,45. O pires está fora das classes avaliadas. O arquivo da foto é verificado por SHA-256.
 
 Com o modelo atual, esse único exemplo teve um verdadeiro positivo (xícara), nenhum falso positivo e um falso negativo (colher). A precisão observada foi 1,00 e o recall foi 0,50 nesses dois objetos. Esses valores não estimam a qualidade geral do sistema. A amostra não cobre diversidade de produtos, iluminação, oclusão ou distância. Não há estimativa de mAP. O teste automatizado exige a detecção da xícara e permite melhorias futuras na detecção da colher.
 
-Não foi feita avaliação representativa de acurácia ou de carga multiusuário.
+### Variações sintéticas de robustez
+
+`exemplos/sinteticos/` contém 10 variações determinísticas da foto de referência (brilho, contraste, ruído, desfoque, espelhamento, escala, oclusão parcial de cada objeto e segunda xícara sobreposta em região livre), geradas por `exemplos/gerar_sinteticos.py` e verificadas por SHA-256. A avaliação roda com:
+
+```bash
+python evaluate_photos.py --labels exemplos/sinteticos/rotulos-sinteticos.json
+```
+
+O relatório passou a incluir métricas por classe (falso aprovado = falso positivo; falso reprovado = falso negativo). Com o modelo atual, nas 10 variações (21 objetos anotados): 12 acertos, 1 falso aprovado e 9 falsos reprovados — a colher falha na maioria das perturbações (2 acertos em 10), a xícara resiste melhor (10 acertos em 11). Esses números medem apenas robustez a perturbações controladas de UMA foto: não cobrem kits ou categorias reais e não estimam acurácia nem mAP. Um conjunto rotulado de fotos reais de kits, com iluminação, oclusão, fundos e quantidades variadas, continua pendente e é pré-requisito para qualquer estimativa de acurácia.
+
+Não foi feita avaliação representativa de acurácia ou de carga multiusuário. Quotas de upload/armazenamento, retenção e limites operacionais seguem como lacunas declaradas (ver Limitações conhecidas) e sua definição é decisão do responsável pelo produto.
 
 ## Status
 

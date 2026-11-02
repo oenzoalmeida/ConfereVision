@@ -1,0 +1,306 @@
+{
+  "description": "Variações sintéticas determinísticas de UMA foto CC0 (gerar_sinteticos.py). Medem robustez a perturbações controladas; não são fotos reais de kits e não estimam acurácia nem mAP.",
+  "iou_threshold": 0.5,
+  "confidence_threshold": 0.45,
+  "images": [
+    {
+      "file": "exemplos/sinteticos/brilho-escuro.png",
+      "sha256": "02d35f76e3fe0931fd684239e955c7a64829b6ef74d52cbb40075886ae74157b",
+      "variacao": "brilho-escuro",
+      "evaluated_classes": [
+        "Caneca / xícara",
+        "Colher"
+      ],
+      "objects": [
+        {
+          "classe": "Caneca / xícara",
+          "caixa": [
+            173,
+            18,
+            239,
+            292
+          ]
+        },
+        {
+          "classe": "Colher",
+          "caixa": [
+            325,
+            66,
+            101,
+            262
+          ]
+        }
+      ]
+    },
+    {
+      "file": "exemplos/sinteticos/brilho-claro.png",
+      "sha256": "7f177c2250f1928504202b80a6abceed1898ffec986dbe4b3a3c3853212f3ca9",
+      "variacao": "brilho-claro",
+      "evaluated_classes": [
+        "Caneca / xícara",
+        "Colher"
+      ],
+      "objects": [
+        {
+          "classe": "Caneca / xícara",
+          "caixa": [
+            173,
+            18,
+            239,
+            292
+          ]
+        },
+        {
+          "classe": "Colher",
+          "caixa": [
+            325,
+            66,
+            101,
+            262
+          ]
+        }
+      ]
+    },
+    {
+      "file": "exemplos/sinteticos/contraste-baixo.png",
+      "sha256": "97f28bf7a8f5107300301f5d5d975b47893f10342daad45c757fa5b51b27c9f8",
+      "variacao": "contraste-baixo",
+      "evaluated_classes": [
+        "Caneca / xícara",
+        "Colher"
+      ],
+      "objects": [
+        {
+          "classe": "Caneca / xícara",
+          "caixa": [
+            173,
+            18,
+            239,
+            292
+          ]
+        },
+        {
+          "classe": "Colher",
+          "caixa": [
+            325,
+            66,
+            101,
+            262
+          ]
+        }
+      ]
+    },
+    {
+      "file": "exemplos/sinteticos/ruido.png",
+      "sha256": "09e8950399c0aab2a99ed109beb9a9fe78b2d99a1ffc6589ef771d88306f1cc0",
+      "variacao": "ruido",
+      "evaluated_classes": [
+        "Caneca / xícara",
+        "Colher"
+      ],
+      "objects": [
+        {
+          "classe": "Caneca / xícara",
+          "caixa": [
+            173,
+            18,
+            239,
+            292
+          ]
+        },
+        {
+          "classe": "Colher",
+          "caixa": [
+            325,
+            66,
+            101,
+            262
+          ]
+        }
+      ]
+    },
+    {
+      "file": "exemplos/sinteticos/desfoque.png",
+      "sha256": "da6fc6084316fed030d76d3c032559141fda9ca2b66a0890eeb4e876476433ec",
+      "variacao": "desfoque",
+      "evaluated_classes": [
+        "Caneca / xícara",
+        "Colher"
+      ],
+      "objects": [
+        {
+          "classe": "Caneca / xícara",
+          "caixa": [
+            173,
+            18,
+            239,
+            292
+          ]
+        },
+        {
+          "classe": "Colher",
+          "caixa": [
+            325,
+            66,
+            101,
+            262
+          ]
+        }
+      ]
+    },
+    {
+      "file": "exemplos/sinteticos/flip-horizontal.png",
+      "sha256": "fbbc2c58da37f5a80a093e78ab32b9c71f981d4fc6d7c27ec1b8cbee4212b71c",
+      "variacao": "flip-horizontal",
+      "evaluated_classes": [
+        "Caneca / xícara",
+        "Colher"
+      ],
+      "objects": [
+        {
+          "classe": "Caneca / xícara",
+          "caixa": [
+            188,
+            18,
+            239,
+            292
+          ]
+        },
+        {
+          "classe": "Colher",
+          "caixa": [
+            174,
+            66,
+            101,
+            262
+          ]
+        }
+      ]
+    },
+    {
+      "file": "exemplos/sinteticos/escala-80.png",
+      "sha256": "02ddbe44861a1fc60c89b5ae36cd9ab8cba535f742c9a7ff447a97985cbfb8f0",
+      "variacao": "escala-80",
+      "evaluated_classes": [
+        "Caneca / xícara",
+        "Colher"
+      ],
+      "objects": [
+        {
+          "classe": "Caneca / xícara",
+          "caixa": [
+            138,
+            14,
+            191,
+            234
+          ]
+        },
+        {
+          "classe": "Colher",
+          "caixa": [
+            260,
+            53,
+            81,
+            210
+          ]
+        }
+      ]
+    },
+    {
+      "file": "exemplos/sinteticos/oclusao-xicara.png",
+      "sha256": "84de3a4cc32f78fec42866e3e386c3cb720aa5b61c77d080592b48935d526df2",
+      "variacao": "oclusao-xicara",
+      "evaluated_classes": [
+        "Caneca / xícara",
+        "Colher"
+      ],
+      "objects": [
+        {
+          "classe": "Caneca / xícara",
+          "caixa": [
+            173,
+            18,
+            239,
+            292
+          ]
+        },
+        {
+          "classe": "Colher",
+          "caixa": [
+            325,
+            66,
+            101,
+            262
+          ]
+        }
+      ]
+    },
+    {
+      "file": "exemplos/sinteticos/oclusao-colher.png",
+      "sha256": "cfc8adef1097d5c262ffb341d14fdd26aed543007d366a237b2c5162eff6a5ee",
+      "variacao": "oclusao-colher",
+      "evaluated_classes": [
+        "Caneca / xícara",
+        "Colher"
+      ],
+      "objects": [
+        {
+          "classe": "Caneca / xícara",
+          "caixa": [
+            173,
+            18,
+            239,
+            292
+          ]
+        },
+        {
+          "classe": "Colher",
+          "caixa": [
+            325,
+            66,
+            101,
+            262
+          ]
+        }
+      ]
+    },
+    {
+      "file": "exemplos/sinteticos/duas-xicaras.png",
+      "sha256": "0d692e84709a11146cc116fac933bcde18a57646d1e0e234979202373d20035a",
+      "variacao": "duas-xicaras",
+      "evaluated_classes": [
+        "Caneca / xícara",
+        "Colher"
+      ],
+      "objects": [
+        {
+          "classe": "Caneca / xícara",
+          "caixa": [
+            173,
+            18,
+            239,
+            292
+          ]
+        },
+        {
+          "classe": "Colher",
+          "caixa": [
+            325,
+            66,
+            101,
+            262
+          ]
+        },
+        {
+          "classe": "Caneca / xícara",
+          "caixa": [
+            8,
+            217,
+            143,
+            175
+          ]
+        }
+      ]
+    }
+  ]
+}
