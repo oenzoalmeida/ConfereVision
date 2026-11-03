@@ -1,0 +1,229 @@
+{
+  "dataset": "COCO val2017 (anotações oficiais de instância, 5000 imagens; amostra selecionada por categoria)",
+  "amostra": {
+    "imagens_avaliadas": 300,
+    "max_por_classe": 15,
+    "max_imagens": 300,
+    "semente": 20261102
+  },
+  "limiar_confianca": 0.45,
+  "limiar_iou": 0.5,
+  "total": {
+    "tp": 271,
+    "fp": 111,
+    "fn": 664,
+    "precisao": 0.709,
+    "revocacao": 0.29
+  },
+  "por_classe": {
+    "Banana": {
+      "tp": 11,
+      "fp": 1,
+      "fn": 48,
+      "suporte": 59,
+      "precisao": 0.917,
+      "revocacao": 0.186
+    },
+    "Bolsa": {
+      "tp": 7,
+      "fp": 3,
+      "fn": 31,
+      "suporte": 38,
+      "precisao": 0.7,
+      "revocacao": 0.184
+    },
+    "Caneca / xícara": {
+      "tp": 31,
+      "fp": 16,
+      "fn": 59,
+      "suporte": 90,
+      "precisao": 0.66,
+      "revocacao": 0.344
+    },
+    "Celular": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 22,
+      "suporte": 26,
+      "precisao": 1.0,
+      "revocacao": 0.154
+    },
+    "Colher": {
+      "tp": 3,
+      "fp": 3,
+      "fn": 32,
+      "suporte": 35,
+      "precisao": 0.5,
+      "revocacao": 0.086
+    },
+    "Controle remoto": {
+      "tp": 4,
+      "fp": 3,
+      "fn": 21,
+      "suporte": 25,
+      "precisao": 0.571,
+      "revocacao": 0.16
+    },
+    "Escova de dentes": {
+      "tp": 4,
+      "fp": 3,
+      "fn": 3,
+      "suporte": 7,
+      "precisao": 0.571,
+      "revocacao": 0.571
+    },
+    "Faca": {
+      "tp": 5,
+      "fp": 2,
+      "fn": 42,
+      "suporte": 47,
+      "precisao": 0.714,
+      "revocacao": 0.106
+    },
+    "Garfo": {
+      "tp": 12,
+      "fp": 2,
+      "fn": 12,
+      "suporte": 24,
+      "precisao": 0.857,
+      "revocacao": 0.5
+    },
+    "Garrafa": {
+      "tp": 59,
+      "fp": 36,
+      "fn": 84,
+      "suporte": 143,
+      "precisao": 0.621,
+      "revocacao": 0.413
+    },
+    "Gravata": {
+      "tp": 7,
+      "fp": 1,
+      "fn": 5,
+      "suporte": 12,
+      "precisao": 0.875,
+      "revocacao": 0.583
+    },
+    "Guarda-chuva": {
+      "tp": 18,
+      "fp": 2,
+      "fn": 11,
+      "suporte": 29,
+      "precisao": 0.9,
+      "revocacao": 0.621
+    },
+    "Laranja": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 22,
+      "suporte": 22,
+      "precisao": null,
+      "revocacao": 0.0
+    },
+    "Livro": {
+      "tp": 5,
+      "fp": 0,
+      "fn": 95,
+      "suporte": 100,
+      "precisao": 1.0,
+      "revocacao": 0.05
+    },
+    "Mala": {
+      "tp": 3,
+      "fp": 2,
+      "fn": 10,
+      "suporte": 13,
+      "precisao": 0.6,
+      "revocacao": 0.231
+    },
+    "Maçã": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 11,
+      "suporte": 11,
+      "precisao": null,
+      "revocacao": 0.0
+    },
+    "Mochila": {
+      "tp": 4,
+      "fp": 4,
+      "fn": 24,
+      "suporte": 28,
+      "precisao": 0.5,
+      "revocacao": 0.143
+    },
+    "Mouse": {
+      "tp": 9,
+      "fp": 0,
+      "fn": 7,
+      "suporte": 16,
+      "precisao": 1.0,
+      "revocacao": 0.562
+    },
+    "Notebook": {
+      "tp": 15,
+      "fp": 7,
+      "fn": 6,
+      "suporte": 21,
+      "precisao": 0.682,
+      "revocacao": 0.714
+    },
+    "Relógio": {
+      "tp": 5,
+      "fp": 7,
+      "fn": 6,
+      "suporte": 11,
+      "precisao": 0.417,
+      "revocacao": 0.455
+    },
+    "Taça": {
+      "tp": 11,
+      "fp": 2,
+      "fn": 29,
+      "suporte": 40,
+      "precisao": 0.846,
+      "revocacao": 0.275
+    },
+    "Teclado": {
+      "tp": 12,
+      "fp": 3,
+      "fn": 8,
+      "suporte": 20,
+      "precisao": 0.8,
+      "revocacao": 0.6
+    },
+    "Tesoura": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 5,
+      "suporte": 5,
+      "precisao": null,
+      "revocacao": 0.0
+    },
+    "Tigela": {
+      "tp": 28,
+      "fp": 5,
+      "fn": 55,
+      "suporte": 83,
+      "precisao": 0.848,
+      "revocacao": 0.337
+    },
+    "Urso de pelúcia": {
+      "tp": 9,
+      "fp": 2,
+      "fn": 8,
+      "suporte": 17,
+      "precisao": 0.818,
+      "revocacao": 0.529
+    },
+    "Vaso": {
+      "tp": 5,
+      "fp": 7,
+      "fn": 8,
+      "suporte": 13,
+      "precisao": 0.417,
+      "revocacao": 0.385
+    }
+  },
+  "escopo": "Fotos públicas variadas, não kits reais de usuários. Mede o detector YOLOX-s nas categorias do catálogo em cenário geral; não é validação de precisão comercial (exige fotos reais dos kits/bancadas dos usuários)."
+}
