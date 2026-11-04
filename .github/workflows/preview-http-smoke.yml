@@ -10,6 +10,17 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Require preview source to match tested application files
+        run: |
+          changed="$(git diff --name-only f0363797fb1d94d13f518d8ff4b479b598774cfd HEAD -- . ':(exclude).github/workflows/**')"
+          if [ -n "$changed" ]; then
+            echo "::error::Preview URL was built from f0363797; application files have changed: $changed"
+            exit 1
+          fi
       - name: Verify real preview endpoint (GET only)
         env:
           PREVIEW_BASE: https://conferevision-ja1nw2ii4-tech-lead1.vercel.app
