@@ -1,1 +1,25 @@
-{% extends 'base.html' %}{% block title %}Conferir kit · ConfereVision{% endblock %}{% block content %}<div class="eyebrow">Bancada de conferência</div><h1>Cada item conta.</h1><p class="muted">Escolha o kit e envie uma imagem ou um vídeo com os objetos visíveis e separados.</p><div class="card narrow"><form method="post" enctype="multipart/form-data" data-processing>{% csrf_token %}{{ form.as_p }}<button>Analisar composição</button><div class="progress" role="status">Processando os objetos. Aguarde nesta página…</div></form></div><div class="card narrow"><h2>Uma boa captura faz diferença</h2><p>Use fundo neutro, iluminação uniforme e enquadre somente a área do kit. Evite mãos sobre os objetos e itens sobrepostos.</p><p class="muted">Até 30 MB. Imagens JPEG/PNG até 16 MP. Vídeos MP4/AVI/MOV: os primeiros 15 segundos são analisados, em amostras de cerca de 1 segundo. A confirmação exige as últimas 3 amostras compatíveis.</p><p class="muted">O detector real trabalha com categorias do catálogo. Não verifica marcas, SKU, conteúdo da embalagem ou objetos fora dessas categorias.</p></div>{% endblock %}
+{% extends 'base.html' %}
+{% block title %}Conferir kit · ConfereVision{% endblock %}
+{% block content %}
+<div class="eyebrow">Conferência de kits</div>
+<h1>Vamos conferir seu kit?</h1>
+<p class="muted">Escolha um kit cadastrado e envie uma foto ou um vídeo. O sistema compara os objetos encontrados com a lista de itens esperados.</p>
+
+<div class="card narrow">
+  <h2>Faça sua conferência</h2>
+  <p class="muted">Ainda não cadastrou o que deve estar no kit? <a href="{% url 'kit_new' %}">Cadastrar um kit</a>.</p>
+  <form method="post" enctype="multipart/form-data" data-processing>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Verificar itens do kit</button>
+    <div class="progress" role="status">Estamos conferindo os objetos. Continue nesta página até o resultado aparecer…</div>
+  </form>
+</div>
+
+<div class="card narrow">
+  <h2>Como tirar uma boa foto</h2>
+  <p>Coloque os objetos separados sobre uma superfície lisa e bem iluminada. Mostre todos os itens na imagem, sem cobri-los com as mãos.</p>
+  <p class="muted">Você pode enviar fotos JPEG ou PNG e vídeos MP4, AVI ou MOV, com até 30 MB. Para vídeos, o sistema analisa os primeiros 15 segundos.</p>
+  <p class="muted">A conferência é automática e pode cometer erros. Confira o resultado antes de aceitar ou corrigir a separação. O sistema reconhece apenas os tipos de objetos disponíveis no catálogo. Não identifica marcas nem códigos de produto.</p>
+</div>
+{% endblock %}
