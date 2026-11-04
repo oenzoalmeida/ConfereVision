@@ -1,7 +1,5 @@
 name: Hosted preview HTTP smoke
 on:
-  push:
-    branches: [ux/kit-guided-inspection]
   workflow_dispatch:
 permissions:
   contents: read
@@ -13,6 +11,7 @@ jobs:
       - name: Verify real preview endpoint (GET only)
         env:
           PREVIEW_BASE: https://conferevision-ja1nw2ii4-tech-lead1.vercel.app
+          PROTECTION_BYPASS: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
         run: |
           python3 - <<'PY'
           import os,sys
@@ -22,7 +21,7 @@ jobs:
           failed=[]
           for path,expected in [('/healthz','text'),('/entrar/','text/html')]:
             try:
-              with urlopen(Request(base+path,headers={'User-Agent':'ConfereVisionPreviewSmoke/1.0'}),timeout=25) as r:
+              with urlopen(Request(base+path,headers={'User-Agent':'ConfereVisionPreviewSmoke/1.0',**({'x-vercel-protection-bypass':os.environ['PROTECTION_BYPASS']} if os.getenv('PROTECTION_BYPASS') else {})}),timeout=25) as r:
                 status=r.status
                 ct=r.headers.get('Content-Type','')
                 body=r.read(100000).decode('utf-8','replace')
