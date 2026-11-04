@@ -1,5 +1,7 @@
 name: Hosted preview HTTP smoke
 on:
+  push:
+    branches: [ux/kit-guided-inspection]
   workflow_dispatch:
 permissions:
   contents: read
@@ -18,6 +20,9 @@ jobs:
           from urllib.request import Request,urlopen
           from urllib.error import URLError,HTTPError
           base=os.environ['PREVIEW_BASE']
+          if not os.getenv('PROTECTION_BYPASS'):
+            print('BLOCKED: protected preview requires the GitHub Actions secret VERCEL_AUTOMATION_BYPASS_SECRET (configured in the corresponding Vercel project). SSO was not disabled.')
+            sys.exit(1)
           failed=[]
           for path,expected in [('/healthz','text'),('/entrar/','text/html')]:
             try:
