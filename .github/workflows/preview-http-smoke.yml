@@ -1,0 +1,54 @@
+name: Hosted preview HTTP smoke
+on:
+  push:
+    branches: [ux/kit-guided-inspection]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Require preview source to match tested application files
+        run: |
+          changed="$(git diff --name-only f0363797fb1d94d13f518d8ff4b479b598774cfd HEAD -- . ':(exclude).github/workflows/**')"
+          if [ -n "$changed" ]; then
+            echo "::error::Preview URL was built from f0363797; application files have changed: $changed"
+            exit 1
+          fi
+      - name: Verify real preview endpoint (GET only)
+        env:
+          PREVIEW_BASE: https://conferevision-ja1nw2ii4-tech-lead1.vercel.app
+          PROTECTION_BYPASS: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+        run: |
+          python3 - <<'PY'
+          import os,sys
+          from urllib.request import Request,urlopen
+          from urllib.error import URLError,HTTPError
+          base=os.environ['PREVIEW_BASE']
+          if not os.getenv('PROTECTION_BYPASS'):
+            print('BLOCKED: protected preview requires the GitHub Actions secret VERCEL_AUTOMATION_BYPASS_SECRET (configured in the corresponding Vercel project). SSO was not disabled.')
+            sys.exit(1)
+          failed=[]
+          for path,expected in [('/healthz','text'),('/entrar/','text/html')]:
+            try:
+              with urlopen(Request(base+path,headers={'User-Agent':'ConfereVisionPreviewSmoke/1.0',**({'x-vercel-protection-bypass':os.environ['PROTECTION_BYPASS']} if os.getenv('PROTECTION_BYPASS') else {})}),timeout=25) as r:
+                status=r.status
+                ct=r.headers.get('Content-Type','')
+                body=r.read(100000).decode('utf-8','replace')
+              print(path,'status',status,'type',ct,'length',len(body))
+              if status!=200: failed.append(path+' not HTTP 200')
+              if path=='/entrar/' and ('<html' not in body.lower() or 'login' not in body.lower() and 'entrar' not in body.lower()):
+                failed.append(path+' is not the expected login page')
+            except (HTTPError,URLError,TimeoutError) as e:
+              failed.append(path+': '+type(e).__name__+' ('+str(e)[:160]+')')
+          if failed:
+            print('Preview failures:','; '.join(failed))
+            sys.exit(1)
+          print('Hosted preview public smoke passed')
+          PY

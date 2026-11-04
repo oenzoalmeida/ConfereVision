@@ -66,19 +66,21 @@ class KitForm(forms.ModelForm):
 
 
 class InspectForm(forms.Form):
-    kit = forms.ModelChoiceField(queryset=Kit.objects.none(), label='Kit esperado')
+    kit = forms.ModelChoiceField(
+        queryset=Kit.objects.none(), label='Qual kit você deseja conferir?'
+    )
     source = forms.ChoiceField(
-        label='Origem',
+        label='Tipo de conferência',
         choices=[
-            ('image', 'Imagem / foto'),
-            ('video', 'Vídeo'),
-            ('correct', 'Demonstração completa'),
-            ('missing', 'Demonstração com falta'),
-            ('extra', 'Demonstração com excedente'),
+            ('image', 'Enviar foto'),
+            ('video', 'Enviar vídeo'),
+            ('correct', 'Exemplo: todos os itens presentes'),
+            ('missing', 'Exemplo: falta um item'),
+            ('extra', 'Exemplo: há um item a mais'),
         ],
     )
     file = forms.FileField(
-        label='Arquivo',
+        label='Selecione o arquivo (apenas para foto ou vídeo)',
         required=False,
         widget=forms.ClearableFileInput(
             attrs={'accept': 'image/jpeg,image/png,video/mp4,video/x-msvideo,video/quicktime'}

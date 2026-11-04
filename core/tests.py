@@ -180,6 +180,17 @@ class AccessTests(TestCase):
         ]:
             self.assertEqual(self.client.get(url).status_code, 200, url)
 
+    def test_inspection_page_explains_first_steps(self):
+        self.client.force_login(self.a)
+        response = self.client.get('/conferir/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Vamos conferir seu kit?')
+        self.assertContains(response, 'Cadastrar um kit')
+        self.assertContains(response, 'Verificar itens do kit')
+        self.assertContains(response, 'Tipo de conferência')
+        self.assertContains(response, 'Exemplo: falta um item')
+        self.assertContains(response, 'A conferência é automática e pode cometer erros.')
+
     def test_admin_login_throttle(self):
         for i in range(11):
             response = self.client.post('/admin/login/', {'username': 'admin', 'password': 'wrong'})
