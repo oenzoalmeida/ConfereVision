@@ -1,0 +1,39 @@
+name: Hosted preview HTTP smoke
+on:
+  push:
+    branches: [ux/kit-guided-inspection]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Verify real preview endpoint (GET only)
+        env:
+          PREVIEW_BASE: https://conferevision-ja1nw2ii4-tech-lead1.vercel.app
+        run: |
+          python3 - <<'PY'
+          import os,sys
+          from urllib.request import Request,urlopen
+          from urllib.error import URLError,HTTPError
+          base=os.environ['PREVIEW_BASE']
+          failed=[]
+          for path,expected in [('/healthz','text'),('/entrar/','text/html')]:
+            try:
+              with urlopen(Request(base+path,headers={'User-Agent':'ConfereVisionPreviewSmoke/1.0'}),timeout=25) as r:
+                status=r.status
+                ct=r.headers.get('Content-Type','')
+                body=r.read(100000).decode('utf-8','replace')
+              print(path,'status',status,'type',ct,'length',len(body))
+              if status!=200: failed.append(path+' not HTTP 200')
+              if path=='/entrar/' and ('<html' not in body.lower() or 'login' not in body.lower() and 'entrar' not in body.lower()):
+                failed.append(path+' is not the expected login page')
+            except (HTTPError,URLError,TimeoutError) as e:
+              failed.append(path+': '+type(e).__name__+' ('+str(e)[:160]+')')
+          if failed:
+            print('Preview failures:','; '.join(failed))
+            sys.exit(1)
+          print('Hosted preview public smoke passed')
+          PY
