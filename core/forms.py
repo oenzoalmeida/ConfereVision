@@ -66,7 +66,9 @@ class KitForm(forms.ModelForm):
 
 
 class InspectForm(forms.Form):
-    kit = forms.ModelChoiceField(queryset=Kit.objects.none(), label='Qual kit você deseja conferir?')
+    kit = forms.ModelChoiceField(
+        queryset=Kit.objects.none(), label='Qual kit você deseja conferir?'
+    )
     source = forms.ChoiceField(
         label='Tipo de conferência',
         choices=[
