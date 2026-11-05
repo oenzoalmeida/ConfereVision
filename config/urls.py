@@ -8,8 +8,21 @@ from core import views
 
 
 def robots(request):
-    # Sistema interno: impede indexação por buscadores.
-    return HttpResponse('User-agent: *\nDisallow: /\n', content_type='text/plain; charset=utf-8')
+    # Mantem o bloqueio geral. A excecao cobre somente a previa publica no LinkedIn.
+    # Robots orienta crawlers; autenticacao e autorizacao continuam independentes.
+    rules = (
+        'User-agent: LinkedInBot\n'
+        'Disallow: /\n'
+        'Allow: /$\n'
+        'Allow: /entrar/$\n'
+        'Allow: /entrar/?*\n'
+        'Allow: /static/og-image.png$\n'
+        'Allow: /static/og-image.6fbdb32da254.png$\n'
+        '\n'
+        'User-agent: *\n'
+        'Disallow: /\n'
+    )
+    return HttpResponse(rules, content_type='text/plain; charset=utf-8')
 
 
 urlpatterns = [
