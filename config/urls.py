@@ -18,6 +18,7 @@ def robots(request):
         'Allow: /entrar/?*\n'
         'Allow: /static/og-image.png$\n'
         'Allow: /static/og-image.6fbdb32da254.png$\n'
+        'Allow: /static/og-image.56c82f0696b3.png$\n'
         '\n'
         'User-agent: *\n'
         'Disallow: /\n'
