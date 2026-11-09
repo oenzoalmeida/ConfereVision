@@ -105,3 +105,56 @@ a{color:var(--accent)}
 footer{color:var(--muted);border-top:1px solid var(--line)}
 .progress{background:#10232F;border:1px solid var(--line)}
 .skip-link{background:var(--accent);color:#06222B}
+
+/* ==========================================================================
+   PASSADA VISÍVEL 2 (nov/2026) - entrada "Sala de Varredura"
+   Dentro da direção Scanner: tela de entrada em painel duplo (marca à
+   esquerda, formulário à direita), CV gigante vazado ao fundo e feixe de
+   varredura ciano em movimento. Apenas CSS: template e lógica intactos.
+   Movimento desligado com prefers-reduced-motion.
+   ========================================================================== */
+.auth{position:relative;isolation:isolate}
+.auth::before{
+  content:"CV";
+  position:absolute;z-index:-1;left:-3.5rem;top:-5rem;
+  font-family:'Space Grotesk',sans-serif;font-weight:700;
+  font-size:min(34vw,19rem);line-height:1;letter-spacing:-.04em;
+  color:transparent;-webkit-text-stroke:1.5px rgba(53,208,232,.14);
+  pointer-events:none;user-select:none;
+}
+.auth::after{
+  content:"";position:absolute;left:0;right:0;top:12%;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(53,208,232,.85) 35%,rgba(53,208,232,.85) 65%,transparent);
+  box-shadow:0 0 18px rgba(53,208,232,.55);
+  animation:cv-scan 4.5s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+@keyframes cv-scan{from{transform:translateY(0);opacity:.35}50%{opacity:.95}to{transform:translateY(300px);opacity:.35}}
+.auth .eyebrow{animation:cv-rise .5s var(--ease-out) both}
+.auth h1{
+  font-size:clamp(2.5rem,5.4vw,3.9rem);
+  text-shadow:0 0 44px rgba(53,208,232,.28);
+  animation:cv-rise .5s var(--ease-out) .05s both;
+}
+.auth>p.muted{animation:cv-rise .5s var(--ease-out) .1s both}
+.auth .card{
+  box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 0 1px rgba(53,208,232,.10),0 0 44px rgba(53,208,232,.08);
+}
+.auth .card button{box-shadow:0 10px 28px rgba(53,208,232,.28)}
+.auth .card button:hover{box-shadow:0 12px 34px rgba(53,208,232,.4)}
+@media (min-width:900px){
+  .auth{
+    max-width:980px;
+    display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;
+  }
+  .auth>.eyebrow,.auth>h1,.auth>p.muted{grid-column:1}
+  .auth>.card{grid-column:2;grid-row:1/span 4;margin:0}
+  .auth::after{right:52%}
+}
+@media (max-width:899px){
+  .auth::after{animation-duration:5.5s}
+}
+@media (prefers-reduced-motion:reduce){
+  .auth::after{animation:none;opacity:.4}
+  .auth .eyebrow,.auth h1,.auth>p.muted{animation:none}
+}
