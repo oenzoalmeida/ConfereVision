@@ -191,3 +191,8 @@ footer{color:var(--muted);border-top:1px solid var(--line)}
 .pw-toggle svg{width:19px;height:19px}
 .pw-toggle .pw-eye-off{display:none}
 .pw-toggle[aria-pressed="true"] .pw-eye-off{display:block}
+/* Painel de vidro sobre diagonal ciano, restrito às telas de acesso. */
+.auth{padding-top:18px}
+.auth::before{content:"";inset:-40px -12px;transform:skewY(-12deg);background:linear-gradient(135deg,#35d0e825,#0a19245c 55%,#35d0e808);border-top:1px solid #35d0e84a;border-bottom:1px solid #35d0e830;-webkit-text-stroke:0}
+.auth .card{background-color:#112431aa;backdrop-filter:blur(18px);border-color:#35d0e84d;border-radius:22px}
+.auth h1{font-size:clamp(2rem,5vw,3.3rem)}
