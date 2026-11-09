@@ -158,3 +158,41 @@ footer{color:var(--muted);border-top:1px solid var(--line)}
   .auth::after{animation:none;opacity:.4}
   .auth .eyebrow,.auth h1,.auth>p.muted{animation:none}
 }
+
+/* ==========================================================================
+   TELA DE ACESSO (nov/2026) - moldura de viewfinder
+   O cartão de acesso ganha cantos de mira (viewfinder de câmera) em ciano,
+   reforçando a metáfora de detecção, e todos os campos de senha ganham o
+   olho de mostrar/ocultar. Apenas CSS/JS de apresentação.
+   ========================================================================== */
+.auth .card{
+  background-image:
+    linear-gradient(to right, rgba(53,208,232,.95) 20px, transparent 20px),
+    linear-gradient(to bottom, rgba(53,208,232,.95) 20px, transparent 20px),
+    linear-gradient(to left, rgba(53,208,232,.95) 20px, transparent 20px),
+    linear-gradient(to bottom, rgba(53,208,232,.95) 20px, transparent 20px),
+    linear-gradient(to right, rgba(53,208,232,.95) 20px, transparent 20px),
+    linear-gradient(to bottom, rgba(53,208,232,.95) 20px, transparent 20px),
+    linear-gradient(to left, rgba(53,208,232,.95) 20px, transparent 20px),
+    linear-gradient(to bottom, rgba(53,208,232,.95) 20px, transparent 20px);
+  background-repeat:no-repeat;
+  background-size:20px 2px,2px 20px,20px 2px,2px 20px,20px 2px,2px 20px,20px 2px,2px 20px;
+  background-position:top 9px left 9px,top 9px left 9px,top 9px right 9px,top 9px right 9px,bottom 9px left 9px,bottom 9px left 9px,bottom 9px right 9px,bottom 9px right 9px;
+}
+.pw-field{position:relative}
+.pw-field input{padding-right:48px!important}
+.pw-toggle{
+  position:absolute;top:50%;right:5px;transform:translateY(-50%);
+  width:38px;height:38px;display:grid;place-items:center;
+  background:transparent!important;border:0;border-radius:8px;
+  color:var(--muted);cursor:pointer;padding:0;min-height:0;box-shadow:none!important;
+}
+.pw-toggle:hover{color:#35d0e8;background:rgba(53,208,232,.12)!important}
+.pw-toggle svg{width:19px;height:19px}
+.pw-toggle .pw-eye-off{display:none}
+.pw-toggle[aria-pressed="true"] .pw-eye-off{display:block}
+/* Painel de vidro sobre diagonal ciano, restrito às telas de acesso. */
+.auth{padding-top:18px}
+.auth::before{content:"";inset:-40px -12px;transform:skewY(-12deg);background:linear-gradient(135deg,#35d0e825,#0a19245c 55%,#35d0e808);border-top:1px solid #35d0e84a;border-bottom:1px solid #35d0e830;-webkit-text-stroke:0}
+.auth .card{background-color:#112431aa;backdrop-filter:blur(18px);border-color:#35d0e84d;border-radius:22px}
+.auth h1{font-size:clamp(2rem,5vw,3.3rem)}
