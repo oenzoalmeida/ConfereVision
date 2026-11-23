@@ -50,6 +50,19 @@ Vercel (hospedagem serverless), Neon (PostgreSQL persistente).
 
 ## Arquitetura / Estrutura
 
+Caminho principal de uma conferência visual:
+
+```mermaid
+flowchart LR
+  U[Usuário] --> WEB[Django: kits e envio de mídia]
+  WEB --> V[OpenCV / YOLOX-s ONNX]
+  V --> R[Comparação com quantidades esperadas]
+  R --> DB[(PostgreSQL: resultados e histórico)]
+  R --> WEB
+```
+
+A análise depende das classes reconhecidas pelo modelo. Faltas e excedentes são indícios para revisão, não uma garantia de conferência autônoma.
+
 ```text
 ConfereVision/
 ├── config/            # settings e URLs do Django
