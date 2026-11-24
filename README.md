@@ -2,7 +2,7 @@
 
 Sistema web de conferência visual de kits: o usuário cadastra um kit com as quantidades esperadas de cada item, envia uma foto ou um vídeo e a aplicação detecta os objetos presentes, compara com o esperado e aponta faltas e excedentes. O histórico é privado por usuário.
 
-A detecção é real, feita no servidor com o modelo **YOLOX-s (OpenCV Zoo)** em CPU, sem serviços de IA pagos. O projeto foi construído em Python com Django e PostgreSQL.
+A detecção é feita no servidor com o modelo **YOLOX-s (OpenCV Zoo)** em CPU, sem serviços de IA pagos. O projeto foi construído em Python com Django e PostgreSQL.
 
 ## Demonstração
 
@@ -16,7 +16,7 @@ A detecção é real, feita no servidor com o modelo **YOLOX-s (OpenCV Zoo)** em
 
 ## Sobre o projeto
 
-A conferência manual de kits (pedidos, envelopes, kits de peças) é propensa a esquecimentos. O ConfereVision organiza essa checagem: cada kit tem uma composição esperada (item → quantidade) e cada análise compara a detecção da imagem/vídeo contra essa composição, registrando o resultado no histórico do usuário.
+A conferência manual de kits (pedidos, envelopes, kits de peças) é propensa a esquecimentos. O ConfereVision organiza essa checagem: cada kit tem uma composição esperada (item → quantidade) e cada análise compara os objetos detectados na imagem ou no vídeo com essa composição, registrando o resultado no histórico do usuário.
 
 O sistema tem autenticação, área própria por usuário (kits, análises e imagens anotadas isolados por titularidade), administração com indicadores e exportação de histórico.
 
@@ -26,7 +26,7 @@ Cadastro de kits com composição esperada (item → quantidade).
 
 Conferência por **imagem** (JPEG/PNG até 16 MP e 30 MB, com correção de orientação EXIF) ou **vídeo** (até 30 MB, até 4K, primeiros 15 segundos, amostras de ~1 s, aprovação exige as três últimas amostras compatíveis).
 
-Detecção de objetos real com YOLOX-s e limiar de confiança 0,45, com 26 categorias do catálogo expostas para composição (garrafa, caneca, mouse, teclado, livro, entre outras).
+Detecção de objetos com YOLOX-s e limiar de confiança 0,45, com 26 categorias do catálogo expostas para composição (garrafa, caneca, mouse, teclado, livro, entre outras).
 
 Resultado com diferenças apontadas: faltas, excedentes e contagens. Registro de confirmação do usuário.
 
