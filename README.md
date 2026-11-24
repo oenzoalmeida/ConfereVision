@@ -14,7 +14,7 @@ O processamento acontece no servidor, em CPU, com o modelo **YOLOX-s (OpenCV Zoo
 
 ![Tela de entrada do ConfereVision](docs/screenshots/entrada.png)
 
-## Sobre o projeto
+## Funcionamento
 
 Na conferência manual, é possível deixar passar itens ausentes ou quantidades incorretas. O ConfereVision registra a composição esperada de cada kit e compara esses dados com o que o modelo detecta nas imagens. O resultado fica disponível no histórico do usuário.
 
