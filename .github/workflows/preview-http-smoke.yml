@@ -1,7 +1,6 @@
 name: Hosted preview HTTP smoke
+# Somente manual: chama um preview hospedado real (GET), nunca automatico em push.
 on:
-  push:
-    branches: [ux/kit-guided-inspection]
   workflow_dispatch:
 permissions:
   contents: read
