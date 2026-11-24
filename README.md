@@ -1,8 +1,8 @@
 # ConfereVision
 
-Sistema web de conferência visual de kits: o usuário cadastra um kit com as quantidades esperadas de cada item, envia uma foto ou um vídeo e a aplicação detecta os objetos presentes, compara com o esperado e aponta faltas e excedentes. O histórico é privado por usuário.
+O ConfereVision compara os itens detectados em uma foto ou vídeo com a composição cadastrada de um kit. O usuário informa as quantidades esperadas, envia a mídia e recebe uma indicação de possíveis faltas ou excedentes. Cada usuário acessa apenas seu próprio histórico.
 
-A detecção é real, feita no servidor com o modelo **YOLOX-s (OpenCV Zoo)** em CPU, sem serviços de IA pagos. O projeto foi construído em Python com Django e PostgreSQL.
+O processamento acontece no servidor, em CPU, com o modelo **YOLOX-s (OpenCV Zoo)**. A aplicação usa Python, Django e PostgreSQL e não depende de uma API paga de IA.
 
 ## Demonstração
 
@@ -14,9 +14,9 @@ A detecção é real, feita no servidor com o modelo **YOLOX-s (OpenCV Zoo)** em
 
 ![Tela de entrada do ConfereVision](docs/screenshots/entrada.png)
 
-## Sobre o projeto
+## Funcionamento
 
-A conferência manual de kits (pedidos, envelopes, kits de peças) é propensa a esquecimentos. O ConfereVision organiza essa checagem: cada kit tem uma composição esperada (item → quantidade) e cada análise compara a detecção da imagem/vídeo contra essa composição, registrando o resultado no histórico do usuário.
+Na conferência manual, é possível deixar passar itens ausentes ou quantidades incorretas. O ConfereVision registra a composição esperada de cada kit e compara esses dados com o que o modelo detecta nas imagens. O resultado fica disponível no histórico do usuário.
 
 O sistema tem autenticação, área própria por usuário (kits, análises e imagens anotadas isolados por titularidade), administração com indicadores e exportação de histórico.
 
@@ -142,7 +142,7 @@ Com o modelo atual, esse único exemplo teve um verdadeiro positivo (xícara), n
 python evaluate_photos.py --labels exemplos/sinteticos/rotulos-sinteticos.json
 ```
 
-O relatório passou a incluir métricas por classe (falso aprovado = falso positivo; falso reprovado = falso negativo). Com o modelo atual, nas 10 variações (21 objetos anotados): 12 acertos, 1 falso aprovado e 9 falsos reprovados — a colher falha na maioria das perturbações (2 acertos em 10), a xícara resiste melhor (10 acertos em 11). Esses números medem apenas robustez a perturbações controladas de UMA foto: não cobrem kits ou categorias reais e não estimam acurácia nem mAP. Um conjunto rotulado de fotos reais de kits, com iluminação, oclusão, fundos e quantidades variadas, continua pendente e é pré-requisito para qualquer estimativa de acurácia.
+O relatório passou a incluir métricas por classe (falso aprovado = falso positivo; falso reprovado = falso negativo). Com o modelo atual, nas 10 variações (21 objetos anotados): 12 acertos, 1 falso aprovado e 9 falsos reprovados. A colher falha na maioria das perturbações (2 acertos em 10), a xícara resiste melhor (10 acertos em 11). Esses números medem apenas robustez a perturbações controladas de UMA foto: não cobrem kits ou categorias reais e não estimam acurácia nem mAP. Um conjunto rotulado de fotos reais de kits, com iluminação, oclusão, fundos e quantidades variadas, continua pendente e é pré-requisito para qualquer estimativa de acurácia.
 
 Não foi feita avaliação representativa de acurácia ou de carga multiusuário. Quotas de upload/armazenamento, retenção e limites operacionais seguem como lacunas declaradas (ver Limitações conhecidas) e sua definição é decisão do responsável pelo produto.
 
