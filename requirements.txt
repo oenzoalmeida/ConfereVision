@@ -4,5 +4,5 @@ dj-database-url==3.1.2
 psycopg[binary]==3.3.8
 whitenoise==6.12.0
 numpy==2.5.4
-opencv-python-headless==5.0.0.93
+opencv-python-headless==5.1.0.95
 Pillow==13.0.0
